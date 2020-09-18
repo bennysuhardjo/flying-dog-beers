@@ -4,6 +4,7 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
 import requests
+import plotly.express as px
 
 
 ########### Define your variables
@@ -26,7 +27,7 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-fig = go.Bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
 
 
