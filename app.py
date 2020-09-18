@@ -27,11 +27,7 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
-fig.update_layout(
-    plot_bgcolor=colors['background'],
-    paper_bgcolor=colors['background'],
-    font_color=colors['text']
-)
+
 
 ########### Set up the chart
 bitterness = go.Bar(
@@ -81,3 +77,8 @@ app.layout = html.Div(children=[
 
 if __name__ == '__main__':
     app.run_server()
+
+
+
+# -*- coding: utf-8 -*-
+
