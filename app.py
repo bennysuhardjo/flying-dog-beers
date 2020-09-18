@@ -95,6 +95,10 @@ app.layout = html.Div(children=[
         id='example-graph-2',
         figure=fig
     ),
+    dcc.Graph(
+        id='example-stock-1',
+        figure=figStock
+    ),
 
     html.A('Code on Github', href=githublink),
     html.Br(),
