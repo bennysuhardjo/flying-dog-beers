@@ -53,7 +53,20 @@ beer_layout = go.Layout(
 
 beer_fig = go.Figure(data=beer_data, layout=beer_layout)
 
+data =requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SPY&outputsize=full&apikey=L5W8DWNNL7QRMNH9').json()
+json_data = []
 
+for i in data['Time Series (Daily)']: 
+    #print(i, data['Time Series (Daily)'][i]) 
+    json_data.append( [i,data['Time Series (Daily)'][i]["1. open"],data['Time Series (Daily)'][i]["2. high"],
+                         data['Time Series (Daily)'][i]["3. low"], data['Time Series (Daily)'][i]["4. close"],
+                         data['Time Series (Daily)'][i]["5. adjusted close"],
+                         data['Time Series (Daily)'][i]["6. volume"],
+                         data['Time Series (Daily)'][i]["7. dividend amount"],
+                         data['Time Series (Daily)'][i]["8. split coefficient"]]) 
+
+
+df_all = pd.DataFrame.from_records( json_data )
 
 
 
