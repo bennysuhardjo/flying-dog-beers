@@ -2,6 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
+import pandas as pd
 
 ########### Define your variables
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
@@ -16,6 +17,14 @@ label1='IBU'
 label2='ABV'
 githublink='https://github.com/austinlasseter/flying-dog-beers'
 sourceurl='https://www.flyingdog.com/beers/'
+
+df = pd.DataFrame({
+    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+    "Amount": [4, 1, 2, 2, 4, 5],
+    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
+
+fig = go.Bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
 ########### Set up the chart
 bitterness = go.Bar(
@@ -51,7 +60,7 @@ app.layout = html.Div(children=[
     html.H1(myheading),
     dcc.Graph(
         id='flyingdog',
-        figure=beer_fig
+        figure=fig
     ),
     html.A('Code on Github', href=githublink),
     html.Br(),
