@@ -26,7 +26,7 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-fig = go.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+fig = go.Bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
 fig.update_layout(
     plot_bgcolor=colors['background'],
