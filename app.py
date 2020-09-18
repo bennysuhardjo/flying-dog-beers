@@ -4,6 +4,8 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
 import plotly.express as px
+import requests
+import json  
 
 ########### Define your variables
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
@@ -50,6 +52,12 @@ beer_layout = go.Layout(
 )
 
 beer_fig = go.Figure(data=beer_data, layout=beer_layout)
+
+
+
+
+data =requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SPY&outputsize=full&apikey=L5W8DWNNL7QRMNH9').json()
+
 
 
 ########### Initiate the app
