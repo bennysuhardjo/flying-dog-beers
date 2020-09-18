@@ -72,7 +72,11 @@ df_mod = df_all.rename(columns={0: "Date", 1: "Open", 2: "High", 3: "Low", 4: "C
 
 df_mod_2020 = df_mod[df_mod['Date'].str[:4] == "2020"]
 
-
+figStock = go.Figure(data=[go.Candlestick(x=df_mod_2020["Date"],
+                open=df_mod_2020["Open"],
+                high=df_mod_2020["High"],
+                low=df_mod_2020["Low"],
+                close=df_mod_2020["Close"])])
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
