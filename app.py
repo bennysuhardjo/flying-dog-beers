@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import plotly.express as px
 import requests
-import json  
+
 
 ########### Define your variables
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
