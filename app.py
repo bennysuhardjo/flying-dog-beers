@@ -3,7 +3,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
-import plotly.express as px
 import requests
 
 
@@ -27,7 +26,7 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+fig = go.Bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
 
 
