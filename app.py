@@ -48,7 +48,7 @@ app.layout = html.Div(children=[
         html.Tr([html.Td(['Sector']), html.Td(id='sector')]),
         html.Tr([html.Td(['Forward PE']), html.Td(id='forwardpe')]),
         
-    ])
+    ]),
     
     dcc.Graph(
         id='example-stock-1'
