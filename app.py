@@ -43,6 +43,13 @@ app.layout = html.Div(children=[
     html.Label('US Stock Ticker: '),
     dcc.Input(id='stock_ticker', value='IBM', type='text'),
     html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+    
+    html.Table([
+        html.Tr([html.Td(['Sector']), html.Td(id='sector')]),
+        html.Tr([html.Td(['Forward PE']), html.Td(id='forwardpe')]),
+        
+    ])
+    
     dcc.Graph(
         id='example-stock-1'
     ),
@@ -51,7 +58,9 @@ app.layout = html.Div(children=[
 )
 
 @app.callback(
-    Output('example-stock-1', 'figure'),
+    [Output('example-stock-1', 'figure'),
+     Output('sector', 'children'),
+     Output('forwardpe', 'children')],
     [Input('submit-button-state', 'n_clicks')],
     [State('stock_ticker', 'value')]
 )
@@ -84,7 +93,12 @@ def update_output_div(n_clicks, stock_tick):
                 close=df_mod_2020["Close"])])
     #figStock.update_layout(transition_duration=1000)
 
-    return figStock
+    
+    getStringRequestOverview = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+stock_tick+"&apikey=L5W8DWNNL7QRMNH9"
+    dataOverview =requests.get(getStringRequestOverview).json()
+
+    
+    return figStock, dataOverview["Sector"], dataOverview["ForwardPE"]
 
 if __name__ == '__main__':
     app.run_server()
