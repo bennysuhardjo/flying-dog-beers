@@ -97,8 +97,12 @@ def update_output_div(n_clicks, stock_tick):
     getStringRequestOverview = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+stock_tick+"&apikey=L5W8DWNNL7QRMNH9"
     dataOverview =requests.get(getStringRequestOverview).json()
 
-    
-    return figStock, dataOverview["Sector"], dataOverview["ForwardPE"]
+    try:
+        dataOverview["Sector"]
+    except:
+        return figStock
+    else:
+        return figStock, dataOverview["Sector"], dataOverview["ForwardPE"]
 
 if __name__ == '__main__':
     app.run_server()
