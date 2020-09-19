@@ -45,7 +45,8 @@ app.layout = html.Div(children=[
     html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
     
     html.Table([
-        html.Tr([html.Td(['Sector:']), html.Td(id='sector')],[html.Td(['Forward PE:']), html.Td(id='forwardpe')]),
+        html.Tr([html.Td(['Sector:']), html.Td(id='sector')]),
+        html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe')]),
         html.Tr([html.Td(['Analyst Target Price:']), html.Td(id='AnalystTargetPrice')]),
         html.Tr([html.Td(['Dividend Per Share:']), html.Td(id='DividendPerShare')]),
         html.Tr([html.Td(['Dividend Yield (%):']), html.Td(id='DividendYield')]),
