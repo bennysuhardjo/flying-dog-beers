@@ -120,12 +120,12 @@ def update_output_div(n_clicks, stock_tick):
     dataOverview =requests.get(getStringRequestOverview).json()
 
     try:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverviewtput['ExDividendDate'], dataOverviewtput['52WeekHigh'], dataOverviewtput['52WeekLow'], dataOverviewtput['50DayMovingAverage'], dataOverviewtput['200DayMovingAverage']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
     
     except:
         return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
     else:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverviewtput['ExDividendDate'], dataOverviewtput['52WeekHigh'], dataOverviewtput['52WeekLow'], dataOverviewtput['50DayMovingAverage'], dataOverviewtput['200DayMovingAverage']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
 
 
 if __name__ == '__main__':
