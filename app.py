@@ -5,21 +5,14 @@ import plotly.graph_objs as go
 import pandas as pd
 import requests
 import plotly.express as px
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import time
 
 
 ########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='lightblue'
-color2='darkgreen'
 mytitle='Stock Trend'
 tabtitle='Stock Trend'
 myheading='Stock Trend'
-label1='IBU'
-label2='ABV'
 
 
 
@@ -47,9 +40,9 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading),
 
-    html.Label('Stock Ticker: '),
+    html.Label('US Stock Ticker: '),
     dcc.Input(id='stock_ticker', value='IBM', type='text'),
-
+    html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
     dcc.Graph(
         id='example-stock-1'
     ),
@@ -59,9 +52,10 @@ app.layout = html.Div(children=[
 
 @app.callback(
     Output('example-stock-1', 'figure'),
-    [Input('stock_ticker', 'value')]
+    [Input('submit-button-state', 'n_clicks')],
+    State('stock_ticker', 'value')]
 )
-def update_output_div(stock_tick):
+def update_output_div(n_clicks, stock_tick):
     getStringRequest = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+stock_tick+"&outputsize=compact&apikey=L5W8DWNNL7QRMNH9"
     data =requests.get(getStringRequest).json()
     time.sleep(3)
