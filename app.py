@@ -47,8 +47,16 @@ app.layout = html.Div(children=[
     html.Table([
         html.Tr([html.Td(['Sector:']), html.Td(id='sector')]),
         html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe')]),
-        html.Tr([html.Td(['Analyst Target Price:']), html.Td(id='AnalystTargetPrice')])
+        html.Tr([html.Td(['Analyst Target Price:']), html.Td(id='AnalystTargetPrice')]),
+        html.Tr([html.Td(['Dividend Per Share:']), html.Td(id='DividendPerShare')]),
+        html.Tr([html.Td(['Dividend Yield (%):']), html.Td(id='DividendYield')]),
+        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate')]),
+        html.Tr([html.Td(['52 Week High:']), html.Td(id='52WeekHigh')]),
+        html.Tr([html.Td(['52 Week Low:']), html.Td(id='52WeekLow')]),
+        html.Tr([html.Td(['50 Day Moving Average:']), html.Td(id='50DayMovingAverage')]),
+        html.Tr([html.Td(['200 Day Moving Average:']), html.Td(id='200DayMovingAverage')])    
         
+
     ]),
     
     dcc.Graph(
@@ -62,7 +70,19 @@ app.layout = html.Div(children=[
     [Output('example-stock-1', 'figure'),
      Output('sector', 'children'),
      Output('forwardpe', 'children'),
-     Output('AnalystTargetPrice', 'children')],
+     Output('AnalystTargetPrice', 'children'),
+     Output('DividendPerShare', 'children'),
+     Output('DividendYield', 'children'),
+     Output('ExDividendDate', 'children'),
+     Output('52WeekHigh', 'children'),
+     Output('52WeekLow', 'children'),
+     Output('50DayMovingAverage', 'children'),
+     Output('200DayMovingAverage', 'children')
+
+    
+    
+    
+    ],
     [Input('submit-button-state', 'n_clicks')],
     [State('stock_ticker', 'value')]
 )
@@ -100,11 +120,13 @@ def update_output_div(n_clicks, stock_tick):
     dataOverview =requests.get(getStringRequestOverview).json()
 
     try:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverviewtput['ExDividendDate'], dataOverviewtput['52WeekHigh'], dataOverviewtput['52WeekLow'], dataOverviewtput['50DayMovingAverage'], dataOverviewtput['200DayMovingAverage']
+    
     except:
-        return figStock, " ", " ", " "
+        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
     else:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverviewtput['ExDividendDate'], dataOverviewtput['52WeekHigh'], dataOverviewtput['52WeekLow'], dataOverviewtput['50DayMovingAverage'], dataOverviewtput['200DayMovingAverage']
+
 
 if __name__ == '__main__':
     app.run_server()
