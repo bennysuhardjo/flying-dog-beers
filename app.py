@@ -61,7 +61,7 @@ app.layout = html.Div(children=[
     [Input('stock_ticker', 'value')]
 )
 def update_output_div(stock_tick):
-    getStringRequest = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+stock_tick+"&outputsize=full&apikey=L5W8DWNNL7QRMNH9"
+    getStringRequest = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+stock_tick+"&outputsize=compact&apikey=L5W8DWNNL7QRMNH9"
     data =requests.get(getStringRequest).json()
     json_data = []
 
