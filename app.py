@@ -102,7 +102,7 @@ def update_output_div(n_clicks, stock_tick):
     except:
         return figStock, " ", " "
     else:
-        return figStock, dataOverview["Sector"], dataOverview["ForwardPE"]
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE']
 
 if __name__ == '__main__':
     app.run_server()
