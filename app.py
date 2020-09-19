@@ -53,7 +53,7 @@ app.layout = html.Div(children=[
 @app.callback(
     Output('example-stock-1', 'figure'),
     [Input('submit-button-state', 'n_clicks')],
-    State('stock_ticker', 'value')]
+    [State('stock_ticker', 'value')]
 )
 def update_output_div(n_clicks, stock_tick):
     getStringRequest = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+stock_tick+"&outputsize=compact&apikey=L5W8DWNNL7QRMNH9"
