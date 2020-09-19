@@ -45,8 +45,9 @@ app.layout = html.Div(children=[
     html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
     
     html.Table([
-        html.Tr([html.Td(['Sector']), html.Td(id='sector')]),
-        html.Tr([html.Td(['Forward PE']), html.Td(id='forwardpe')]),
+        html.Tr([html.Td(['Sector:']), html.Td(id='sector')]),
+        html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe')]),
+        html.Tr([html.Td(['Analyst Target Price:']), html.Td(id='AnalystTargetPrice')])
         
     ]),
     
@@ -60,7 +61,8 @@ app.layout = html.Div(children=[
 @app.callback(
     [Output('example-stock-1', 'figure'),
      Output('sector', 'children'),
-     Output('forwardpe', 'children')],
+     Output('forwardpe', 'children'),
+     Output('AnalystTargetPrice', 'children')],
     [Input('submit-button-state', 'n_clicks')],
     [State('stock_ticker', 'value')]
 )
@@ -98,11 +100,11 @@ def update_output_div(n_clicks, stock_tick):
     dataOverview =requests.get(getStringRequestOverview).json()
 
     try:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice']
     except:
-        return figStock, " ", " "
+        return figStock, " ", " ", " "
     else:
-        return figStock, dataOverview['Sector'], dataOverview['ForwardPE']
+        return figStock, dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice']
 
 if __name__ == '__main__':
     app.run_server()
