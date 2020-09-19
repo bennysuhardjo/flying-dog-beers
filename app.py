@@ -98,9 +98,9 @@ def update_output_div(n_clicks, stock_tick):
     dataOverview =requests.get(getStringRequestOverview).json()
 
     try:
-        dataOverview["Sector"]
+        return dataOverview["Sector"]
     except:
-        return figStock
+        return figStock, "", ""
     else:
         return figStock, dataOverview["Sector"], dataOverview["ForwardPE"]
 
