@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 import plotly.express as px
 from dash.dependencies import Input, Output
+import time
 
 
 ########### Define your variables
@@ -63,6 +64,7 @@ app.layout = html.Div(children=[
 def update_output_div(stock_tick):
     getStringRequest = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+stock_tick+"&outputsize=compact&apikey=L5W8DWNNL7QRMNH9"
     data =requests.get(getStringRequest).json()
+    time.sleep(3)
     json_data = []
 
     for i in data['Time Series (Daily)']: 
