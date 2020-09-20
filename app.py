@@ -48,7 +48,7 @@ app.layout = html.Div(children=[
         html.Tr([html.Td(['Name:']), html.Td(id='Name'), html.Td(['                    Sector:']), html.Td(id='sector')]),
         html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe'), html.Td(['                   Analyst Target Price:']), html.Td(id='AnalystTargetPrice')]),
         html.Tr([html.Td(['Dividend Per Share:']), html.Td(id='DividendPerShare'), html.Td(['                    Dividend Yield (%):']), html.Td(id='DividendYield')]),
-        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate')]),
+        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['                    EPS:']), html.Td(id='EPS')]),
         html.Tr([html.Td(['52-Week High:']), html.Td(id='52WeekHigh'), html.Td(['                    52-Week Low:']), html.Td(id='52WeekLow')]),
         html.Tr([html.Td(['50-Day Moving Average:']), html.Td(id='50DayMovingAverage'), html.Td(['                    200-Day Moving Average:']), html.Td(id='200DayMovingAverage')])
         
@@ -71,6 +71,7 @@ app.layout = html.Div(children=[
      Output('DividendPerShare', 'children'),
      Output('DividendYield', 'children'),
      Output('ExDividendDate', 'children'),
+     Output('EPS', 'children'),
      Output('52WeekHigh', 'children'),
      Output('52WeekLow', 'children'),
      Output('50DayMovingAverage', 'children'),
@@ -117,12 +118,12 @@ def update_output_div(n_clicks, stock_tick):
     dataOverview =requests.get(getStringRequestOverview).json()
 
     try:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
     
     except:
-        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
+        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
     else:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
 
 
 if __name__ == '__main__':
