@@ -62,7 +62,7 @@ app.layout = html.Div([
             ),
             #generate_table(df_mod_2020),
        ]),
-       dcc.Tab(label='Tab two', children=[
+       dcc.Tab(label='Public Transport', children=[
             dcc.Graph(
                 figure={
                     'data': [
@@ -74,7 +74,7 @@ app.layout = html.Div([
                 }
             )
         ]),
-        dcc.Tab(label='Tab three', children=[
+        dcc.Tab(label='Banking', children=[
             dcc.Graph(
                 figure={
                     'data': [
