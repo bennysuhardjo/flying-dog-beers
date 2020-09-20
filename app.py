@@ -37,30 +37,58 @@ server = app.server
 app.title=tabtitle
 
 ########### Set up the layout
-app.layout = html.Div(children=[
-    html.H1(myheading),
+app.layout = html.Div([
+    dcc.Tabs([
+        dcc.Tab(label='Financial Market', children=[
+            html.H1(myheading),
 
-    html.Label('US Stock Ticker: '),
-    dcc.Input(id='stock_ticker', value='IBM', type='text'),
-    html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
-    
-    html.Table([
-        html.Tr([html.Td(['Name:']), html.Td(id='name'), html.Td(['|Sector:']), html.Td(id='sector')]),
-        html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe'), html.Td(['|Analyst Target Price ($):']), html.Td(id='AnalystTargetPrice')]),
-        html.Tr([html.Td(['Dividend Per Share ($):']), html.Td(id='DividendPerShare'), html.Td(['|Dividend Yield (%):']), html.Td(id='DividendYield')]),
-        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['|EPS ($):']), html.Td(id='EPS')]),
-        html.Tr([html.Td(['52-Week High ($):']), html.Td(id='52WeekHigh'), html.Td(['|52-Week Low ($):']), html.Td(id='52WeekLow')]),
-        html.Tr([html.Td(['50-Day Moving Average ($):']), html.Td(id='50DayMovingAverage'), html.Td(['|200-Day Moving Average ($):']), html.Td(id='200DayMovingAverage')])
+            html.Label('US Stock Ticker: '),
+            dcc.Input(id='stock_ticker', value='IBM', type='text'),
+            html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+
+            html.Table([
+                html.Tr([html.Td(['Name:']), html.Td(id='name'), html.Td(['|Sector:']), html.Td(id='sector')]),
+                html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe'), html.Td(['|Analyst Target Price ($):']), html.Td(id='AnalystTargetPrice')]),
+                html.Tr([html.Td(['Dividend Per Share ($):']), html.Td(id='DividendPerShare'), html.Td(['|Dividend Yield (%):']), html.Td(id='DividendYield')]),
+                html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['|EPS ($):']), html.Td(id='EPS')]),
+                html.Tr([html.Td(['52-Week High ($):']), html.Td(id='52WeekHigh'), html.Td(['|52-Week Low ($):']), html.Td(id='52WeekLow')]),
+                html.Tr([html.Td(['50-Day Moving Average ($):']), html.Td(id='50DayMovingAverage'), html.Td(['|200-Day Moving Average ($):']), html.Td(id='200DayMovingAverage')])
 
 
-    ]),
-    
-    dcc.Graph(
-        id='example-stock-1'
-    ),
-    #generate_table(df_mod_2020),
-    ]
-)
+            ]),
+
+            dcc.Graph(
+                id='example-stock-1'
+            ),
+            #generate_table(df_mod_2020),
+       ]),
+       dcc.Tab(label='Tab two', children=[
+            dcc.Graph(
+                figure={
+                    'data': [
+                        {'x': [1, 2, 3], 'y': [1, 4, 1],
+                            'type': 'bar', 'name': 'SF'},
+                        {'x': [1, 2, 3], 'y': [1, 2, 3],
+                         'type': 'bar', 'name': u'Montréal'},
+                    ]
+                }
+            )
+        ]),
+        dcc.Tab(label='Tab three', children=[
+            dcc.Graph(
+                figure={
+                    'data': [
+                        {'x': [1, 2, 3], 'y': [2, 4, 3],
+                            'type': 'bar', 'name': 'SF'},
+                        {'x': [1, 2, 3], 'y': [5, 4, 3],
+                         'type': 'bar', 'name': u'Montréal'},
+                    ]
+                }
+            )
+        ])
+    ])
+
+])
 
 @app.callback(
     [Output('example-stock-1', 'figure'),
