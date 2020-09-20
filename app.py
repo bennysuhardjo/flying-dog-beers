@@ -116,7 +116,12 @@ def update_output_div(n_clicks, stock_tick):
                 low=df_mod_2020["Low"],
                 close=df_mod_2020["Close"])])
     #figStock.update_layout(transition_duration=1000)
-
+    figStock.update_xaxes(
+        rangebreaks=[
+            dict(bounds=["sat", "mon"]), #hide weekends
+            dict(values=["2015-12-25", "2016-01-01"])  # hide Christmas and New Year's
+        ]
+    )
     
     getStringRequestOverview = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+stock_tick+"&apikey=L5W8DWNNL7QRMNH9"
     dataOverview =requests.get(getStringRequestOverview).json()
