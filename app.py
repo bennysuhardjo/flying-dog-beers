@@ -46,11 +46,11 @@ app.layout = html.Div(children=[
     
     html.Table([
         html.Tr([html.Td(['Name:']), html.Td(id='name'), html.Td(['|Sector:']), html.Td(id='sector')]),
-        html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe'), html.Td(['|Analyst Target Price:']), html.Td(id='AnalystTargetPrice')]),
-        html.Tr([html.Td(['Dividend Per Share:']), html.Td(id='DividendPerShare'), html.Td(['|Dividend Yield (%):']), html.Td(id='DividendYield')]),
-        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['|EPS:']), html.Td(id='EPS')]),
-        html.Tr([html.Td(['52-Week High:']), html.Td(id='52WeekHigh'), html.Td(['|52-Week Low:']), html.Td(id='52WeekLow')]),
-        html.Tr([html.Td(['50-Day Moving Average:']), html.Td(id='50DayMovingAverage'), html.Td(['|200-Day Moving Average:']), html.Td(id='200DayMovingAverage')])
+        html.Tr([html.Td(['Forward PE:']), html.Td(id='forwardpe'), html.Td(['|Analyst Target Price ($):']), html.Td(id='AnalystTargetPrice')]),
+        html.Tr([html.Td(['Dividend Per Share ($):']), html.Td(id='DividendPerShare'), html.Td(['|Dividend Yield (%):']), html.Td(id='DividendYield')]),
+        html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['|EPS ($):']), html.Td(id='EPS')]),
+        html.Tr([html.Td(['52-Week High ($):']), html.Td(id='52WeekHigh'), html.Td(['|52-Week Low ($):']), html.Td(id='52WeekLow')]),
+        html.Tr([html.Td(['50-Day Moving Average ($):']), html.Td(id='50DayMovingAverage'), html.Td(['|200-Day Moving Average ($):']), html.Td(id='200DayMovingAverage')])
 
 
     ]),
