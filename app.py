@@ -63,7 +63,7 @@ app.layout = html.Div([
             dcc.Graph(
                 id='example-stock-1'
             ),
-            html.Iframe(id = 'datatable', height = 500, width = 4000)
+            html.Iframe(id = 'datatable', height = 500, width = 1200)
        ]),
        dcc.Tab(label='Public Transport', children=[
             dcc.Graph(
