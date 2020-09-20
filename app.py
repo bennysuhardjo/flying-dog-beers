@@ -7,6 +7,7 @@ import requests
 import plotly.express as px
 from dash.dependencies import Input, Output, State
 import time
+import dash_table
 
 
 ########### Define your variables
@@ -16,17 +17,19 @@ myheading='Stock Trend'
 
 
 
-#def generate_table(dataframe, max_rows=10):
-#    return html.Table([
-#        html.Thead(
-#            html.Tr([html.Th(col) for col in dataframe.columns])
-#        ),
-#        html.Tbody([
-#            html.Tr([
-#                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-#            ]) for i in range(min(len(dataframe), max_rows))
-#        ])
-#    ])
+def generate_table(dataframe, max_rows=10):
+    return html.Table([
+        html.Thead(
+            html.Tr([html.Th(col) for col in dataframe.columns])
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+            ]) for i in range(min(len(dataframe), max_rows))
+        ])
+    ])
+
+
 
 
 
@@ -53,14 +56,14 @@ app.layout = html.Div([
                 html.Tr([html.Td(['Ex-Dividend Date:']), html.Td(id='ExDividendDate'), html.Td(['|EPS ($):']), html.Td(id='EPS')]),
                 html.Tr([html.Td(['52-Week High ($):']), html.Td(id='52WeekHigh'), html.Td(['|52-Week Low ($):']), html.Td(id='52WeekLow')]),
                 html.Tr([html.Td(['50-Day Moving Average ($):']), html.Td(id='50DayMovingAverage'), html.Td(['|200-Day Moving Average ($):']), html.Td(id='200DayMovingAverage')])
-
+                
 
             ]),
 
             dcc.Graph(
                 id='example-stock-1'
             ),
-            #generate_table(df_mod_2020),
+            html.Iframe(id = 'datatable', height = 500, width = 1200)
        ]),
        dcc.Tab(label='Public Transport', children=[
             dcc.Graph(
@@ -103,7 +106,8 @@ app.layout = html.Div([
      Output('52WeekHigh', 'children'),
      Output('52WeekLow', 'children'),
      Output('50DayMovingAverage', 'children'),
-     Output('200DayMovingAverage', 'children')
+     Output('200DayMovingAverage', 'children'),
+     Output('datatable','srcDoc')
 
     
     
@@ -150,13 +154,27 @@ def update_output_div(n_clicks, stock_tick):
     getStringRequestOverview = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+stock_tick+"&apikey=L5W8DWNNL7QRMNH9"
     dataOverview =requests.get(getStringRequestOverview).json()
 
+    json_data = []
+    getStringNews = "https://newsapi.org/v2/everything?q="+stock_tick+"&apiKey=e8fc661fec95488d884a597bbed80481"
+    news = requests.get(getStringNews).json()
+    for i in news['articles']: 
+    	json_data.append( [i['publishedAt'] + ": " + i['title']]) 
+
+
+    dfNews = pd.DataFrame.from_records( json_data )
+    dfNews_mod = dfNews.rename(columns={0: "NewsTitle"}).sort_values(by=['NewsTitle'],ascending=False)
+
+    
+    
     try:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.to_html()
+
     
     except:
-        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
+        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
     else:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage']
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.to_html()
+
 
 
 if __name__ == '__main__':
