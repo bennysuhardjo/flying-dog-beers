@@ -31,7 +31,7 @@ def generate_table(dataframe, max_rows=10):
 
 
 
-
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -63,7 +63,15 @@ app.layout = html.Div([
             dcc.Graph(
                 id='example-stock-1'
             ),
-            html.Iframe(id = 'datatable', height = 500, width = 1200)
+	    html.Label('News: '),
+            html.Table([
+                html.Tr([html.Td(['']), html.Td(id='news1')]),  
+		html.Tr([html.Td(['']), html.Td(id='news2')]), 
+		html.Tr([html.Td(['']), html.Td(id='news3')]), 
+		html.Tr([html.Td(['']), html.Td(id='news4')]), 
+		html.Tr([html.Td(['']), html.Td(id='news5')]),            
+
+            ])
        ]),
        dcc.Tab(label='Public Transport', children=[
             dcc.Graph(
@@ -107,9 +115,11 @@ app.layout = html.Div([
      Output('52WeekLow', 'children'),
      Output('50DayMovingAverage', 'children'),
      Output('200DayMovingAverage', 'children'),
-     Output('datatable','srcDoc')
-
-    
+     Output('news1','children'),
+     Output('news2','children'),
+     Output('news3','children'),
+     Output('news4','children'),
+     Output('news5','children'),
     
     
     ],
@@ -160,21 +170,20 @@ def update_output_div(n_clicks, stock_tick):
     for i in news['articles']: 
     	json_data.append( [i['publishedAt'] + ": " + i['title']]) 
 
-
+    
     dfNews = pd.DataFrame.from_records( json_data )
     dfNews_mod = dfNews.rename(columns={0: "NewsTitle"}).sort_values(by=['NewsTitle'],ascending=False)
 
     
     
     try:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.to_html()
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.iloc[0]['NewsTitle'], dfNews_mod.iloc[1]['NewsTitle'], dfNews_mod.iloc[2]['NewsTitle'], dfNews_mod.iloc[3]['NewsTitle'], dfNews_mod.iloc[4]['NewsTitle']
 
     
     except:
-        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
+        return figStock, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
     else:
-        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.to_html()
-
+        return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.iloc[0]['NewsTitle'], dfNews_mod.iloc[1]['NewsTitle'], dfNews_mod.iloc[2]['NewsTitle'], dfNews_mod.iloc[3]['NewsTitle'], dfNews_mod.iloc[4]['NewsTitle']
 
 
 if __name__ == '__main__':
