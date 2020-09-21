@@ -43,7 +43,7 @@ app.title=tabtitle
 app.layout = html.Div([
     dcc.Tabs([
         dcc.Tab(label='Financial Market', children=[
-            html.H1(myheading),
+            
 
             html.Label('US Stock Ticker: '),
             dcc.Input(id='stock_ticker', value='IBM', type='text'),
