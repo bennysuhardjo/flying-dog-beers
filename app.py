@@ -124,8 +124,7 @@ app.layout = html.Div([
                 			figure={
                     				'data': [{'x': df_busRoute['Operator'],
                     		 			  'type': 'histogram'},
-                    					],
-						'layout': {'title': 'No of Buses by Operators'}
+                    					]
                 			}
             			)
         ]),
