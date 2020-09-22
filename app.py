@@ -8,8 +8,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output, State
 import time
 import dash_table
-import zipfile, urllib.request, shutil
-import dash_bootstrap_components as dbc
+
 
 ########### Define your variables
 mytitle='Stock Trend'
@@ -31,6 +30,8 @@ def generate_table(dataframe, max_rows=10):
     ])
 
 
+
+#df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
 headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
            'accept': 'application/json'
 }
@@ -75,36 +76,11 @@ df_busRoute = pd.DataFrame.from_records( json_data ).rename(columns={0: "Service
                                                                      , 5: "Distance", 6: "WD_FirstBus", 7: "WD_LastBus", 8: "SAT_FirstBus", 9: "SAT_LastBus"
                                                                     , 10: "SUN_FirstBus", 11: "SUN_LastBus"})
 
-headers = {'AccountKey': 'NQD/ZccwR5SEDj/MehpKww== ',
-           'accept': 'application/json'
-}
-# MPHd2F+USH+1hA1FDikGeA==
-# NQD/ZccwR5SEDj/MehpKww== 
-
-r =requests.get("http://datamall2.mytransport.sg/ltaodataservice/PV/Bus", headers=headers).json()
 
 
-url = r['value'][0]['Link']
-file_name = 'myzip.zip'
-
-with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
-    shutil.copyfileobj(response, out_file)
-    with zipfile.ZipFile(file_name) as zf:
-        zf.extractall()
-df_busStopStats = pd.read_csv(file_name)
-df_busStopStatsSummary = df_busStopStats.groupby(['DAY_TYPE','TIME_PER_HOUR'], as_index=False)[["TOTAL_TAP_IN_VOLUME"]].sum()
-
-fig = go.Figure(data=go.Heatmap(
-                   z=df_busStopStatsSummary['TOTAL_TAP_IN_VOLUME'],
-                   x=df_busStopStatsSummary['TIME_PER_HOUR'],
-                  y=df_busStopStatsSummary['DAY_TYPE'],
-                   hoverongaps = False))
-fig.update_layout(
-    title="Tap-In Volume (Bus) by Hours of the Day"
-)
 
 ########### Initiate the app
-external_stylesheets = [dbc.themes.BOOTSTRAP]
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
@@ -113,7 +89,7 @@ app.title=tabtitle
 app.layout = html.Div([
     dcc.Tabs([
         dcc.Tab(label='Financial Market', children=[
-            html.H1(myheading),
+            
 
             html.Label('US Stock Ticker: '),
             dcc.Input(id='stock_ticker', value='IBM', type='text'),
@@ -144,23 +120,14 @@ app.layout = html.Div([
             ])
        ]),
        dcc.Tab(label='Public Transport', children=[
-		dbc.Row([
-            		dbc.Col(
-	    			dcc.Graph(
+            dcc.Graph(
                 			figure={
                     				'data': [{'x': df_busRoute['Operator'],
                     		 			  'type': 'histogram'},
                     					],
 						'layout': {'title': 'No of Buses by Operators'}
                 			}
-            			), width=4
-			),
-	    		dbc.Col(
-	    			dcc.Graph(
-                			figure=fig
-            			), width=8)
-	    	])
-	    	
+            			)
         ]),
         dcc.Tab(label='Banking', children=[
             dcc.Graph(
