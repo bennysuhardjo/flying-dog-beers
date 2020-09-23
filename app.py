@@ -103,7 +103,7 @@ cur = conn.cursor()
 # Execute a query
 cur.execute('SELECT * FROM "Transaction"');
 # Retrieve query results
-df_busStopStats = cur.fetchall()
+df_busStopStats = pd.DataFrame(cur.fetchall()) 
 
 df_busStopStatsSummary = df_busStopStats.groupby(['DAY_TYPE','TIME_PER_HOUR'], as_index=False)[["TOTAL_TAP_IN_VOLUME"]].sum()
 
