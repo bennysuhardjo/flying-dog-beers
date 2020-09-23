@@ -36,20 +36,20 @@ headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
 
 results = []
 
-#while True:
-#     new_results = requests.get(
-#         "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes",
-#         headers=headers,
-#         params={'$skip': len(results)}
-#     ).json()['value']
-#     if new_results == []:
-#         break
-#     else:
-#         results += new_results
+while True:
+     new_results = requests.get(
+         "http://datamall2.mytransport.sg/ltaodataservice/BusServices",
+         headers=headers,
+         params={'$skip': len(results)}
+     ).json()['value']
+     if new_results == []:
+         break
+     else:
+         results += new_results
 
 
 
-results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusServices", headers=headers).json()['value']
+#results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusServices", headers=headers).json()['value']
 
 
 json_data = []
