@@ -10,6 +10,8 @@ import time
 import dash_table
 import zipfile, urllib.request, shutil
 import dash_bootstrap_components as dbc
+import os
+import psycopg2
 
 ########### Define your variables
 mytitle='Stock Trend'
@@ -71,23 +73,38 @@ df_busService = pd.DataFrame.from_records( json_data ).rename(columns={0: "Servi
                                                                      , 5: "DestinationCode"})
 
 
-headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
-           'accept': 'application/json'
-}
+#headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
+#           'accept': 'application/json'
+#}
 # MPHd2F+USH+1hA1FDikGeA==
 # NQD/ZccwR5SEDj/MehpKww== 
 
-r =requests.get("http://datamall2.mytransport.sg/ltaodataservice/PV/Bus", headers=headers).json()
+#r =requests.get("http://datamall2.mytransport.sg/ltaodataservice/PV/Bus", headers=headers).json()
 
 
-url = r['value'][0]['Link']
-file_name = 'myzip.zip'
+#url = r['value'][0]['Link']
+#file_name = 'myzip.zip'
 
-with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
-    shutil.copyfileobj(response, out_file)
-    with zipfile.ZipFile(file_name) as zf:
-        zf.extractall()
-df_busStopStats = pd.read_csv(file_name)
+#with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
+#    shutil.copyfileobj(response, out_file)
+#    with zipfile.ZipFile(file_name) as zf:
+#        zf.extractall()
+#df_busStopStats = pd.read_csv(file_name)
+
+
+
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+# Connect to your postgres DB
+# conn = psycopg.connect("dbname=test user=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+# Execute a query
+cur.execute("SELECT * FROM LTA.transaction");
+# Retrieve query results
+df_busStopStats = cur.fetchall()
+
 df_busStopStatsSummary = df_busStopStats.groupby(['DAY_TYPE','TIME_PER_HOUR'], as_index=False)[["TOTAL_TAP_IN_VOLUME"]].sum()
 
 fig = go.Figure(data=go.Heatmap(
