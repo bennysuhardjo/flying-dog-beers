@@ -8,7 +8,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output, State
 import time
 import dash_table
-
+import zipfile, urllib.request, shutil
 
 ########### Define your variables
 mytitle='Stock Trend'
@@ -72,6 +72,35 @@ for i in results:
 df_busRoute = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "StopSequence", 4: "BusStopCode"
                                                                      , 5: "Distance", 6: "WD_FirstBus", 7: "WD_LastBus", 8: "SAT_FirstBus", 9: "SAT_LastBus"
                                                                     , 10: "SUN_FirstBus", 11: "SUN_LastBus"})
+
+
+headers = {'AccountKey': 'NQD/ZccwR5SEDj/MehpKww== ',
+           'accept': 'application/json'
+}
+# MPHd2F+USH+1hA1FDikGeA==
+# NQD/ZccwR5SEDj/MehpKww== 
+
+r =requests.get("http://datamall2.mytransport.sg/ltaodataservice/PV/Bus", headers=headers).json()
+
+
+url = r['value'][0]['Link']
+file_name = 'myzip.zip'
+
+with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
+    shutil.copyfileobj(response, out_file)
+    with zipfile.ZipFile(file_name) as zf:
+        zf.extractall()
+df_busStopStats = pd.read_csv(file_name)
+df_busStopStatsSummary = df_busStopStats.groupby(['DAY_TYPE','TIME_PER_HOUR'], as_index=False)[["TOTAL_TAP_IN_VOLUME"]].sum()
+
+fig = go.Figure(data=go.Heatmap(
+                   z=df_busStopStatsSummary['TOTAL_TAP_IN_VOLUME'],
+                   x=df_busStopStatsSummary['TIME_PER_HOUR'],
+                  y=df_busStopStatsSummary['DAY_TYPE'],
+                   hoverongaps = False))
+fig.update_layout(
+    title="Tap-In Volume (Bus) by Hours of the Day"
+)
 
 
 
