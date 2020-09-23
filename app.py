@@ -41,12 +41,11 @@ while True:
          headers=headers,
          params={'$skip': len(results)}
      ).json()['value']
-     time.sleep(1)
      if new_results == []:
          break
      else:
          results += new_results
-
+time.sleep(20)
 json_data = []
 
 #data['value']
