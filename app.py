@@ -29,9 +29,43 @@ def generate_table(dataframe, max_rows=10):
         ])
     ])
 
+headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
+           'accept': 'application/json'
+}
+
+results = []
+
+while True:
+     new_results = requests.get(
+         "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes",
+         headers=headers,
+         params={'$skip': len(results)}
+     ).json()['value']
+     if new_results == []:
+         break
+     else:
+         results += new_results
+
+json_data = []
+
+#data['value']
+
+for i in results: 
+    #print(i, i["BusStopCode"]) 
+    json_data.append( [i["ServiceNo"],i["Operator"],
+                       i["Direction"],i["StopSequence"],
+                       i["BusStopCode"],i["Distance"],
+                       i["WD_FirstBus"],i["WD_LastBus"],
+                       i["SAT_FirstBus"],i["SAT_LastBus"],
+                       i["SUN_FirstBus"],i["SUN_LastBus"]              
+                      ]) 
 
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
+df_busRoute = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "StopSequence", 4: "BusStopCode"
+                                                                     , 5: "Distance", 6: "WD_FirstBus", 7: "WD_LastBus", 8: "SAT_FirstBus", 9: "SAT_LastBus"
+                                                                    , 10: "SUN_FirstBus", 11: "SUN_LastBus"})
+
+
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
