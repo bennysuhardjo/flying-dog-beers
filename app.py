@@ -49,7 +49,7 @@ results = []
 
 
 
-results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusRoutes", headers=headers).json()['value']
+results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusServices", headers=headers).json()['value']
 
 
 json_data = []
@@ -59,20 +59,16 @@ json_data = []
 for i in results: 
     #print(i, i["BusStopCode"]) 
     json_data.append( [i["ServiceNo"],i["Operator"],
-                       i["Direction"],i["StopSequence"],
-                       i["BusStopCode"],i["Distance"],
-                       i["WD_FirstBus"],i["WD_LastBus"],
-                       i["SAT_FirstBus"],i["SAT_LastBus"],
-                       i["SUN_FirstBus"],i["SUN_LastBus"]
+                       i["Direction"],i["Category"],
+                       i["OriginCode"],i["DestinationCode"]
 
                       
                       
                       ]) 
 
 
-df_busRoute = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "StopSequence", 4: "BusStopCode"
-                                                                     , 5: "Distance", 6: "WD_FirstBus", 7: "WD_LastBus", 8: "SAT_FirstBus", 9: "SAT_LastBus"
-                                                                    , 10: "SUN_FirstBus", 11: "SUN_LastBus"})
+df_busService = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "Category", 4: "OriginCode"
+                                                                     , 5: "DestinationCode"})
 
 
 headers = {'AccountKey': 'NQD/ZccwR5SEDj/MehpKww== ',
@@ -150,7 +146,7 @@ app.layout = html.Div([
             		dbc.Col(
 	    			dcc.Graph(
                 			figure={
-                    				'data': [{'x': df_busRoute['Operator'],
+                    				'data': [{'x': df_busService['Operator'],
                     		 			  'type': 'histogram'},
                     					],
 						'layout': {'title': 'No of Buses by Operators'}
