@@ -41,6 +41,7 @@ while True:
          headers=headers,
          params={'$skip': len(results)}
      ).json()['value']
+     time.sleep(1)
      if new_results == []:
          break
      else:
