@@ -9,6 +9,7 @@ from dash.dependencies import Input, Output, State
 import time
 import dash_table
 import zipfile, urllib.request, shutil
+import dash_bootstrap_components as dbc
 
 ########### Define your variables
 mytitle='Stock Trend'
@@ -105,7 +106,7 @@ fig.update_layout(
 
 
 ########### Initiate the app
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['dbc.themes.BOOTSTRAP']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
@@ -145,14 +146,22 @@ app.layout = html.Div([
             ])
        ]),
        dcc.Tab(label='Public Transport', children=[
-            dcc.Graph(
+            dbc.Row([
+            		dbc.Col(
+	    			dcc.Graph(
                 			figure={
                     				'data': [{'x': df_busRoute['Operator'],
                     		 			  'type': 'histogram'},
                     					],
 						'layout': {'title': 'No of Buses by Operators'}
                 			}
-            			)
+            			), width=4
+			),
+	    		dbc.Col(
+	    			dcc.Graph(
+                			figure=fig
+            			), width=8)
+	    	])
         ]),
         dcc.Tab(label='Banking', children=[
             dcc.Graph(
