@@ -115,7 +115,7 @@ fig = go.Figure(data=go.Heatmap(
                   y=df_busStopStatsSummary['DAY_TYPE'],
                    hoverongaps = False))
 fig.update_layout(
-    title="Tap-In Volume (Bus) by Hours of the Day"
+    title="Tap-In Volume (Bus & Train) by Hours of the Day"
 )
 
 
