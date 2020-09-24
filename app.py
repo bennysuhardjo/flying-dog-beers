@@ -172,7 +172,7 @@ app.layout = html.Div([
                     				'data': [{'x': df_busService['Operator'],
                     		 			  'type': 'histogram'},
                     					],
-						'layout': {'title': 'No of Buses by Operators'}
+						'layout': {'title': 'No of Bus Services by Operators'}
                 			}
             			), width=4
 			),
