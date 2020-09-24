@@ -101,8 +101,8 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # Open a cursor to perform database operations
 cur = conn.cursor()
 # Execute a query
-monthString = "202008"
-ptType = "BUS"
+monthString = '"202008"'
+ptType = '"BUS"'
 cur.execute('SELECT "DAY_TYPE","TIME_PER_HOUR", "TOTAL_TAP_IN_VOLUME" FROM "TransactionByHour" WHERE "YEAR_MONTH" = '+monthString+ 'and "PT_TYPE" = '+ ptType);
 # Retrieve query results
 df_busStopStats = pd.DataFrame(cur.fetchall()).rename(columns={0: "DAY_TYPE", 1: "TIME_PER_HOUR", 2: "TOTAL_TAP_IN_VOLUME"}) 
