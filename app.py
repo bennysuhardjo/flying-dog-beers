@@ -32,11 +32,11 @@ def generate_table(dataframe, max_rows=10):
         ])
     ])
 
-headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
-           'accept': 'application/json'
-}
+#headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
+#           'accept': 'application/json'
+#}
 
-results = []
+#results = []
 
 #while True:
 #     new_results = requests.get(
@@ -51,26 +51,26 @@ results = []
 
 
 
-results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusServices", headers=headers).json()['value']
+#results =requests.get("http://datamall2.mytransport.sg/ltaodataservice/BusServices", headers=headers).json()['value']
 
 
-json_data = []
+#json_data = []
 
 #data['value']
 
-for i in results: 
+#for i in results: 
     #print(i, i["BusStopCode"]) 
-    json_data.append( [i["ServiceNo"],i["Operator"],
-                       i["Direction"],i["Category"],
-                       i["OriginCode"],i["DestinationCode"]
+#    json_data.append( [i["ServiceNo"],i["Operator"],
+#                       i["Direction"],i["Category"],
+#                       i["OriginCode"],i["DestinationCode"]
 
                       
                       
-                      ]) 
+#                      ]) 
 
 
-df_busService = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "Category", 4: "OriginCode"
-                                                                     , 5: "DestinationCode"})
+#df_busService = pd.DataFrame.from_records( json_data ).rename(columns={0: "ServiceNo", 1: "Operator", 2: "Direction", 3: "Category", 4: "OriginCode"
+#                                                                     , 5: "DestinationCode"})
 
 
 #headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
@@ -118,6 +118,10 @@ fig.update_layout(
     title="Tap-In Volume (Bus & Train) by Hours of the Day"
 )
 
+
+cur.execute('SELECT "ServiceNo","Operator" FROM "BusService"');
+# Retrieve query results
+df_busService = pd.DataFrame(cur.fetchall()).rename(columns={0: "ServiceNo", 1: "Operator"}) 
 
 
 ########### Initiate the app
