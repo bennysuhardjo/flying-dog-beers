@@ -206,11 +206,8 @@ app.layout = html.Div([
 		dbc.Col(
 			dcc.Graph(
 				figure = fig1
-			), width=12)
-			
-		)
-		    
-		    
+			), width=12)	
+			    
 	    ])
         ]),
         dcc.Tab(label='Banking', children=[
