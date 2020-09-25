@@ -131,19 +131,20 @@ combined = pd.DataFrame(cur.fetchall()).rename(columns={0: "YEAR_MONTH", 1: "DAY
 							     8: "RoadName", 9: "BusStopDescription", 10: "Latitude", 11: "Longitude"}) 
 
 	   
-fig1 = px.scatter_mapbox(combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR']), lat="Latitude", lon="Longitude", 
+fig1 = px.scatter_mapbox(combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR']), lat="Latitude", lon="Longitude", 
                   size_max=15, zoom=10, 
-                  hover_name = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['BusStopDescription'] ,
+                  hover_name = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])['BusStopDescription'] ,
                   mapbox_style="carto-positron",
-                  size = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TOTAL_TAP_IN_VOLUME'] ,     
-                  animation_frame = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TIME_PER_HOUR']  , 
-                  animation_group = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])["BusStopDescription" ]    
-)
+                  size = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])['TOTAL_TAP_IN_VOLUME'] ,     
+                  animation_frame = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])['TIME_PER_HOUR']  , 
+                  animation_group = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])["BusStopDescription" ]    
+                  
+                       )
 fig1.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 24
 fig1.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 24
 fig1.layout.coloraxis.showscale = False
 fig1.layout.sliders[0].pad.t = 10
-fig1.layout.updatemenus[0].pad.t= 10                  
+fig1.layout.updatemenus[0].pad.t= 10                    
 
 ########### Initiate the app
 external_stylesheets = [dbc.themes.BOOTSTRAP]
