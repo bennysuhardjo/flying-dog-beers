@@ -138,8 +138,7 @@ fig1 = px.scatter_mapbox(combined[(combined["BusStopDescription"]=="Valley Pt") 
                   size = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TOTAL_TAP_IN_VOLUME'] ,     
                   animation_frame = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TIME_PER_HOUR']  , 
                   animation_group = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])["BusStopDescription" ]    
-                  
-                       )
+)
 fig1.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 24
 fig1.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 24
 fig1.layout.coloraxis.showscale = False
