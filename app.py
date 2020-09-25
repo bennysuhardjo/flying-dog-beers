@@ -144,7 +144,11 @@ fig1.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 24
 fig1.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 24
 fig1.layout.coloraxis.showscale = False
 fig1.layout.sliders[0].pad.t = 10
-fig1.layout.updatemenus[0].pad.t= 10                    
+fig1.layout.updatemenus[0].pad.t= 10         
+fig1.update_layout(
+    title="Tap-In Volume For Bus Stops around Raffles Place Throughout The Day (0 --> 00:00 to 00:59, 1 --> 01:00 to 01:59, etc)"
+)
+
 
 ########### Initiate the app
 external_stylesheets = [dbc.themes.BOOTSTRAP]
