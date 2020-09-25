@@ -124,7 +124,7 @@ cur.execute('SELECT "ServiceNo","Operator" FROM "BusService"');
 df_busService = pd.DataFrame(cur.fetchall()).rename(columns={0: "ServiceNo", 1: "Operator"}) 
 
 
-cur.execute('SELECT "YEAR_MONTH","DAY_TYPE", "TIME_PER_HOUR", "PT_TYPE", "PT_CODE", "TOTAL_TAP_IN_VOLUME", "TOTAL_TAP_OUT_VOLUME", "BusStopCode", "RoadName", "BusStopDescription", "Latitude", "Longitude" FROM "selectedBusStopVolume"');
+cur.execute('SELECT "YEAR_MONTH","DAY_TYPE", "TIME_PER_HOUR", "PT_TYPE", "PT_CODE", "TOTAL_TAP_IN_VOLUME", "TOTAL_TAP_OUT_VOLUME", "BusStopCode", "RoadName", "BusStopDescription", "Latitude", "Longitude" FROM "selectedBusStopVolume1"');
 # Retrieve query results
 combined = pd.DataFrame(cur.fetchall()).rename(columns={0: "YEAR_MONTH", 1: "DAY_TYPE", 2: "TIME_PER_HOUR", 3: "PT_TYPE",
 							     4: "PT_CODE", 5: "TOTAL_TAP_IN_VOLUME", 6: "TOTAL_TAP_OUT_VOLUME", 7: "BusStopCode",
