@@ -124,6 +124,29 @@ cur.execute('SELECT "ServiceNo","Operator" FROM "BusService"');
 df_busService = pd.DataFrame(cur.fetchall()).rename(columns={0: "ServiceNo", 1: "Operator"}) 
 
 
+cur.execute('SELECT "YEAR_MONTH","DAY_TYPE", "TIME_PER_HOUR", "PT_TYPE", "PT_CODE", "TOTAL_TAP_IN_VOLUME", "TOTAL_TAP_OUT_VOLUME", "BusStopCode",
+	    "RoadName", "BusStopDescription", "Latitude", "Longitude" FROM "selectedBusStopVolume"');
+# Retrieve query results
+combined = pd.DataFrame(cur.fetchall()).rename(columns={0: "YEAR_MONTH", 1: "DAY_TYPE", 2: "TIME_PER_HOUR", 3: "PT_TYPE",
+							     4: "PT_CODE", 5: "TOTAL_TAP_IN_VOLUME", 6: "TOTAL_TAP_OUT_VOLUME", 7: "BusStopCode",
+							     8: "RoadName", 9: "BusStopDescription", 10: "Latitude", 11: "Longitude"}) 
+
+	   
+fig1 = px.scatter_mapbox(combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR']), lat="Latitude", lon="Longitude", 
+                  size_max=15, zoom=10, 
+                  hover_name = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['BusStopDescription'] ,
+                  mapbox_style="carto-positron",
+                  size = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TOTAL_TAP_IN_VOLUME'] ,     
+                  animation_frame = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])['TIME_PER_HOUR']  , 
+                  animation_group = combined[(combined["BusStopDescription"]=="Valley Pt") & (combined["DAY_TYPE"]=="WEEKDAY")].sort_values(by=['TIME_PER_HOUR'])["BusStopDescription" ]    
+                  
+                       )
+fig1.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 24
+fig1.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 24
+fig1.layout.coloraxis.showscale = False
+fig1.layout.sliders[0].pad.t = 10
+fig1.layout.updatemenus[0].pad.t= 10                  
+
 ########### Initiate the app
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -180,7 +203,17 @@ app.layout = html.Div([
 	    			dcc.Graph(
                 			figure=fig
             			), width=8)
-	    	])
+	    	]),
+	    dbc.Row([
+		dbc.Col(
+			dcc.Graph(
+				figure = fig1
+			), width=12)
+			
+		)
+		    
+		    
+	    ])
         ]),
         dcc.Tab(label='Banking', children=[
             dcc.Graph(
