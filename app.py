@@ -216,16 +216,17 @@ app.layout = html.Div([
 	    ])
         ]),
         dcc.Tab(label='Banking', children=[
-            dcc.Graph(
-                figure={
-                    'data': [
-                        {'x': [1, 2, 3], 'y': [2, 4, 3],
-                            'type': 'bar', 'name': 'SF'},
-                        {'x': [1, 2, 3], 'y': [5, 4, 3],
-                         'type': 'bar', 'name': u'Montréal'},
-                    ]
-                }
-            )
+            html.A("Log-in to DBS (Work-In-Progress)", href=https://bankapitest.herokuapp.com/, target="_blank")
+	    #dcc.Graph(
+            #    figure={
+            #        'data': [
+            #            {'x': [1, 2, 3], 'y': [2, 4, 3],
+            #                'type': 'bar', 'name': 'SF'},
+            #            {'x': [1, 2, 3], 'y': [5, 4, 3],
+            #             'type': 'bar', 'name': u'Montréal'},
+            #        ]
+            #    }
+            #)
         ])
     ])
 
