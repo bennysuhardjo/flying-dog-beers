@@ -205,7 +205,7 @@ app.layout = html.Div([
 
             ])
        ]),
-       dcc.Tab(label='Public Transport', children=[
+       dcc.Tab(label='Public Transport (Bus & Train)', children=[
             dbc.Row([
             		dbc.Col(
 	    			dcc.Graph(
@@ -228,8 +228,10 @@ app.layout = html.Div([
 				figure = fig1
 			), width=12)	
 			    
-	    ]),
-	    dbc.Row([
+	    ])
+        ]),
+	dcc.Tab(label='CarPark Availability', children=[
+            dbc.Row([
 		html.Label('Carpark Availability - Type in your location: '),
             	dcc.Input(id='location_ticker', value='TIONG', type='text'),
             	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
