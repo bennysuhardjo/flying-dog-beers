@@ -32,6 +32,21 @@ def generate_table(dataframe, max_rows=10):
         ])
     ])
 
+headers = {'AccountKey':'/cwI6AoOQzefPZARL5M4Eg==', 'accept': 'application/json'}
+results = []
+while True:
+	new_results = requests.get("http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2",headers=headers,params={'$skip': len(results)}).json()['value']
+	if new_results == []:
+        	break
+	else:
+         	results += new_results
+json_data = []
+for i in results: 
+	json_data.append( [i["CarParkID"],i["Area"],i["Development"],i["Location"],i["AvailableLots"],i["LotType"],i["Agency"]]) 
+df_carPark = pd.DataFrame.from_records( json_data ).rename(columns={0: "CarParkID", 1: "Area", 2: "Development", 3: "Location", 4: "AvailableLots", 5: "LotType", 6: "Agency"})
+isChosen = df_carPark['Development'].str.upper().str.find("TIONG") != -1
+Chosen = df_carPark[isChosen]
+
 #headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
 #           'accept': 'application/json'
 #}
@@ -213,6 +228,16 @@ app.layout = html.Div([
 				figure = fig1
 			), width=12)	
 			    
+	    ]),
+	    dbc.Row([
+		html.Label('Carpark Availability - Type in your location: '),
+            	dcc.Input(id='location_ticker', value='TIONG', type='text'),
+            	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
+
+	    	dash_table.DataTable(
+    			id='locationtable',
+    			columns=[{"name": i, "id": i} for i in Chosen.columns]
+	    	)
 	    ])
         ]),
         dcc.Tab(label='Banking', children=[
@@ -316,6 +341,15 @@ def update_output_div(n_clicks, stock_tick):
     else:
         return figStock, dataOverview['Name'], dataOverview['Sector'], dataOverview['ForwardPE'], dataOverview['AnalystTargetPrice'], dataOverview['DividendPerShare'], dataOverview['DividendYield'], dataOverview['ExDividendDate'], dataOverview['EPS'], dataOverview['52WeekHigh'], dataOverview['52WeekLow'], dataOverview['50DayMovingAverage'], dataOverview['200DayMovingAverage'], dfNews_mod.iloc[0]['NewsTitle'], dfNews_mod.iloc[1]['NewsTitle'], dfNews_mod.iloc[2]['NewsTitle'], dfNews_mod.iloc[3]['NewsTitle'], dfNews_mod.iloc[4]['NewsTitle']
 
+
+@app.callback(
+	Output('locationtable','data'),
+   	[Input('location-button-state', 'n_clicks')],
+        [State('location_ticker', 'value')])
+def set_cities_options(n_clicks, selected_location):
+	isChosen = df_carPark['Development'].str.upper().str.find(selected_location.upper()) != -1
+	Chosen = df_carPark[isChosen]
+	return Chosen.to_dict('records')
 
 if __name__ == '__main__':
     app.run_server()
