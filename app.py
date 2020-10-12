@@ -231,7 +231,6 @@ app.layout = html.Div([
 	    ])
         ]),
 	dcc.Tab(label='CarPark Availability', children=[
-            dbc.Row([
 		html.Label('Carpark Availability - Type in your location: '),
             	dcc.Input(id='location_ticker', value='TIONG', type='text'),
             	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
@@ -240,7 +239,7 @@ app.layout = html.Div([
     			id='locationtable',
     			columns=[{"name": i, "id": i} for i in Chosen.columns]
 	    	)
-	    ])
+	    
         ]),
         dcc.Tab(label='Banking', children=[
             html.A("Log-in to DBS (Work-In-Progress)", href="https://bankapitest.herokuapp.com/", target="_blank")
