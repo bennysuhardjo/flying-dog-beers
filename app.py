@@ -247,8 +247,8 @@ app.layout = html.Div([
             	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
 
 		dcc.Graph(
-				figure = figCarParkAvailability
-			),	
+                	id='carparkavailability', config={ 'scrollZoom': True }
+            	),	
 	    	dash_table.DataTable(
     			id='locationtable',
     			columns=[{"name": i, "id": i} for i in Chosen.columns]
@@ -358,7 +358,8 @@ def update_output_div(n_clicks, stock_tick):
 
 
 @app.callback(
-	Output('locationtable','data'),
+	[Output('locationtable','data'),
+	 Output('carparkavailability','figure')],
    	[Input('location-button-state', 'n_clicks')],
         [State('location_ticker', 'value')])
 def set_cities_options(n_clicks, selected_location):
@@ -371,12 +372,18 @@ def set_cities_options(n_clicks, selected_location):
 	Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
 	Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
 
-	figCarParkAvailability = px.scatter_mapbox(Chosen_Latest, lat='Latitude', lon='Longitude', color="AvailableLots", zoom=15, height=500, hover_name='Development')
+	figCarParkAvailability = go.Figure(data=[go.Scattermapbox(lat=Chosen_Latest.Latitude, lon=Chosen_Latest.Longitude, mode='markers', marker=go.scattermapbox.Marker(
+            size=17,
+            color='rgb(255, 0, 0)',
+            opacity=0.7
+        ), text=Chosen_Latest.Development)])
 
-	figCarParkAvailability.update_layout(mapbox_style="stamen-terrain")
+	latCentre = 1.3691
+	lonCentre = 103.8454
+	figCarParkAvailability.update_layout(mapbox_style="stamen-terrain", autosize=True, hovermode='closest', mapbox=dict(center=go.layout.mapbox.Center(lat=latCentre,lon=lonCentre),zoom=10))
 	
 	
-	return Chosen.to_dict('records')
+	return Chosen.to_dict('records'), figCarParkAvailability
 
 if __name__ == '__main__':
     app.run_server()
