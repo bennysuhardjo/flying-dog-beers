@@ -47,6 +47,15 @@ df_carPark = pd.DataFrame.from_records( json_data ).rename(columns={0: "CarParkI
 isChosen = df_carPark['Development'].str.upper().str.find("TIONG") != -1
 Chosen = df_carPark[isChosen]
 
+Chosen[['Latitude','Longitude','a','b']] = Chosen.Location.str.split(" ",expand=True)
+Chosen_Latest = Chosen.drop(columns=['a','b'])
+Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
+Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
+
+figCarParkAvailability = px.scatter_mapbox(Marina, lat='Latitude', lon='Longitude', color="AvailableLots", zoom=15, height=500, hover_name='Development')
+
+figCarParkAvailability.update_layout(mapbox_style="stamen-terrain")
+
 #headers = {'AccountKey': '/cwI6AoOQzefPZARL5M4Eg==',
 #           'accept': 'application/json'
 #}
@@ -231,6 +240,9 @@ app.layout = html.Div([
 	    ])
         ]),
 	dcc.Tab(label='CarPark Availability', children=[
+		dcc.Graph(
+				figure = figCarParkAvailability
+			), width=12),	
 		html.Label('Carpark Availability - Type in your location:   '),
             	dcc.Input(id='location_ticker', value='TIONG', type='text'),
             	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
