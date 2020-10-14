@@ -241,13 +241,14 @@ app.layout = html.Div([
 	    ])
         ]),
 	dcc.Tab(label='CarPark Availability', children=[
-		dcc.Graph(
-				figure = figCarParkAvailability
-			),	
+		
 		html.Label('Carpark Availability - Type in your location:   '),
             	dcc.Input(id='location_ticker', value='TIONG', type='text'),
             	html.Button(id='location-button-state', n_clicks=0, children='Submit'),
 
+		dcc.Graph(
+				figure = figCarParkAvailability
+			),	
 	    	dash_table.DataTable(
     			id='locationtable',
     			columns=[{"name": i, "id": i} for i in Chosen.columns]
