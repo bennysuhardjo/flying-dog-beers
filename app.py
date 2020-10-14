@@ -364,6 +364,18 @@ def update_output_div(n_clicks, stock_tick):
 def set_cities_options(n_clicks, selected_location):
 	isChosen = df_carPark['Development'].str.upper().str.find(selected_location.upper()) != -1
 	Chosen = df_carPark[isChosen]
+	
+	Chosen_Latest = Chosen
+	Chosen_Latest[['Latitude','Longitude']] = Chosen_Latest.Location.str.split(" ",expand=True)
+	#Chosen_Latest = Chosen_Latest.drop(columns=['a','b'])
+	Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
+	Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
+
+	figCarParkAvailability = px.scatter_mapbox(Chosen_Latest, lat='Latitude', lon='Longitude', color="AvailableLots", zoom=15, height=500, hover_name='Development')
+
+	figCarParkAvailability.update_layout(mapbox_style="stamen-terrain")
+	
+	
 	return Chosen.to_dict('records')
 
 if __name__ == '__main__':
