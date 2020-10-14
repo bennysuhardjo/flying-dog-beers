@@ -47,12 +47,13 @@ df_carPark = pd.DataFrame.from_records( json_data ).rename(columns={0: "CarParkI
 isChosen = df_carPark['Development'].str.upper().str.find("TIONG") != -1
 Chosen = df_carPark[isChosen]
 
-Chosen[['Latitude','Longitude']] = Chosen.Location.str.split(" ",expand=True)
-#Chosen_Latest = Chosen.drop(columns=['a','b'])
+Chosen_Latest = Chosen
+Chosen_Latest[['Latitude','Longitude','a','b']] = Chosen_Latest.Location.str.split(" ",expand=True)
+Chosen_Latest = Chosen_Latest.drop(columns=['a','b'])
 Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
 Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
 
-figCarParkAvailability = px.scatter_mapbox(Marina, lat='Latitude', lon='Longitude', color="AvailableLots", zoom=15, height=500, hover_name='Development')
+figCarParkAvailability = px.scatter_mapbox(Chosen_Latest, lat='Latitude', lon='Longitude', color="AvailableLots", zoom=15, height=500, hover_name='Development')
 
 figCarParkAvailability.update_layout(mapbox_style="stamen-terrain")
 
