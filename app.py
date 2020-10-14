@@ -157,7 +157,7 @@ combined = pd.DataFrame(cur.fetchall()).rename(columns={0: "YEAR_MONTH", 1: "DAY
 
 	   
 fig1 = px.scatter_mapbox(combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR']), lat="Latitude", lon="Longitude", 
-                  size_max=15, zoom=10, 
+                  size_max=15, zoom=14, 
                   hover_name = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])['BusStopDescription'] ,
                   mapbox_style="carto-positron",
                   size = combined[combined["DAY_TYPE"]=="WEEKDAY"].sort_values(by=['TIME_PER_HOUR'])['TOTAL_TAP_IN_VOLUME'] ,     
