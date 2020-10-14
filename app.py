@@ -47,8 +47,8 @@ df_carPark = pd.DataFrame.from_records( json_data ).rename(columns={0: "CarParkI
 isChosen = df_carPark['Development'].str.upper().str.find("TIONG") != -1
 Chosen = df_carPark[isChosen]
 
-Chosen[['Latitude','Longitude','a','b']] = Chosen.Location.str.split(" ",expand=True)
-Chosen_Latest = Chosen.drop(columns=['a','b'])
+Chosen[['Latitude','Longitude']] = Chosen.Location.str.split(" ",expand=True)
+#Chosen_Latest = Chosen.drop(columns=['a','b'])
 Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
 Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
 
