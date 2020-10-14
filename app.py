@@ -48,8 +48,8 @@ isChosen = df_carPark['Development'].str.upper().str.find("TIONG") != -1
 Chosen = df_carPark[isChosen]
 
 Chosen_Latest = Chosen
-Chosen_Latest[['Latitude','Longitude','a','b']] = Chosen_Latest.Location.str.split(" ",expand=True)
-Chosen_Latest = Chosen_Latest.drop(columns=['a','b'])
+Chosen_Latest[['Latitude','Longitude']] = Chosen_Latest.Location.str.split(" ",expand=True)
+#Chosen_Latest = Chosen_Latest.drop(columns=['a','b'])
 Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
 Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
 
