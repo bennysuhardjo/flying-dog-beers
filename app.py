@@ -260,7 +260,8 @@ app.layout = html.Div([
         			{'if': {'column_id': 'CarParkID'},
          			 'width': '20%'},
         			{'if': {'column_id': 'Development'},
-         			 'width': '40%'},
+         			 'width': '40%'}
+			]
 	    	)
 	    
         ]),
