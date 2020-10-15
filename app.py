@@ -253,7 +253,14 @@ app.layout = html.Div([
 	    	dash_table.DataTable(
     			id='locationtable',
     			columns=[{"name": i, "id": i} for i in Chosen.columns],
-			style_cell={'width': '100px'}
+			style_cell={'textAlign': 'center'},
+			style_cell_conditional=[
+        			{'if': {'column_id': 'AvailableLots'},
+         			 'width': '40%'},
+        			{'if': {'column_id': 'CarParkID'},
+         			 'width': '20%'},
+        			{'if': {'column_id': 'Development'},
+         			 'width': '40%'},
 	    	)
 	    
         ]),
