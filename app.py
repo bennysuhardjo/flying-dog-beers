@@ -253,6 +253,7 @@ app.layout = html.Div([
 	    	dash_table.DataTable(
     			id='locationtable',
     			columns=[{"name": i, "id": i} for i in Chosen.columns]
+			style_cell={'width': '180px'}
 	    	)
 	    
         ]),
