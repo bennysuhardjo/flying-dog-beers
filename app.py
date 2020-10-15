@@ -378,9 +378,9 @@ def set_cities_options(n_clicks, selected_location):
             opacity=0.7
         ), text=Chosen_Latest.Development)])
 
-	latCentre = 1.3691
-	lonCentre = 103.8454
-	figCarParkAvailability.update_layout(mapbox_style="stamen-terrain", autosize=True, hovermode='closest', mapbox=dict(center=go.layout.mapbox.Center(lat=latCentre,lon=lonCentre),zoom=10))
+	latCentre = Chosen_Latest['Latitude'].iloc[0]
+	lonCentre = Chosen_Latest['Longitude'].iloc[0]	
+	figCarParkAvailability.update_layout(mapbox_style="stamen-terrain", autosize=True, hovermode='closest', mapbox=dict(center=go.layout.mapbox.Center(lat=latCentre,lon=lonCentre),zoom=15))
 	
 	
 	return Chosen.to_dict('records'), figCarParkAvailability
