@@ -365,10 +365,13 @@ def update_output_div(n_clicks, stock_tick):
 def set_cities_options(n_clicks, selected_location):
 	isChosen = df_carPark['Development'].str.upper().str.find(selected_location.upper()) != -1
 	Chosen = df_carPark[isChosen]
-	
+		
 	Chosen_Latest = Chosen
+	
+	Chosen = Chosen.drop(columns=['Area','Location','LotType','Agency'])
+	
 	Chosen_Latest[['Latitude','Longitude']] = Chosen_Latest.Location.str.split(" ",expand=True)
-	#Chosen_Latest = Chosen_Latest.drop(columns=['a','b'])
+	
 	Chosen_Latest['Latitude'] = pd.to_numeric(Chosen_Latest['Latitude'],errors='coerce')
 	Chosen_Latest['Longitude'] = pd.to_numeric(Chosen_Latest['Longitude'],errors='coerce')
 
