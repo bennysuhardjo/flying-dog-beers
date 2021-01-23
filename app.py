@@ -327,7 +327,8 @@ def update_output_div(n_clicks, stock_tick):
 
     df_mod = df_all.rename(columns={0: "Date", 1: "Open", 2: "High", 3: "Low", 4: "Close", 5: "Adj Close", 6: "Volume", 7: "Dividend", 8: "Split Coefficient"})
 
-    df_mod_2020 = df_mod[df_mod['Date'].str[:4] == "2020"]
+    #df_mod_2020 = df_mod[df_mod['Date'].str[:4] == "2020"]
+    df_mod_2020 = df_mod
 
     figStock = go.Figure(data=[go.Candlestick(x=df_mod_2020["Date"],
                 open=df_mod_2020["Open"],
